@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Bot.Contexts;
 using Telegram.Bot;
 
 namespace Bot.Interfaces
@@ -7,6 +8,6 @@ namespace Bot.Interfaces
     {
         public string Name { get; }
 
-        Task ExecuteAsync(object transaction, ITelegramBotClient botClient);
+        Task ExecuteAsync(object transaction, ApplicationDbContext db, ITelegramBotClient botClient);
     }
 }
