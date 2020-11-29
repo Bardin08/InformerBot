@@ -1,9 +1,12 @@
 ﻿using Telegram.Bot;
+using Telegram.Bot.Args;
 
 namespace Bot.Interfaces
 {
     public interface IInformerBotClient
     {
-        public ITelegramBotClient BotClient { get; set; }
+        void StartReceiving();
+
+        void StopReceiving();
     }
 }
