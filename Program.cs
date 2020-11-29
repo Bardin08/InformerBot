@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using Bot.Contexts;
 using Bot.Handlers;
 using Bot.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,8 +20,15 @@ namespace Bot
             var host = Host.CreateDefaultBuilder()
                 .ConfigureServices((_, services) =>
                 {
+                    services.AddDbContext<ApplicationDbContext>(options =>
+                    {
+                        options.LogTo(Console.WriteLine);
+                        options.UseSqlite("Data Source=C:\\Users\\User\\Desktop\\IT01.Telegram.Bots\\IT01PollerDb.db");
+                    });
+
                     services.AddSingleton<ITelegramBotClient>(new TelegramBotClient(config["Bot:Token"]));
                     services.AddSingleton<IUpdateHandler, UpdateHandler>();
+                    services.AddSingleton<ICommandHandler, CommandHandler>();
                     services.AddSingleton<IInformerBotClient, InformerBotClient>();
                 })
                 .Build();
