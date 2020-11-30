@@ -17,6 +17,8 @@ namespace Bot.Models
 
         public int TransactionId { get; set; }
 
+        public string TransactionType { get; set; }
+
         public List<int> MessageIds { get; set; }
     }
 }
