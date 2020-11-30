@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Bot.Contexts;
+using Bot.Dictionaries;
 using Bot.Interfaces;
 using Bot.Models;
+using Microsoft.EntityFrameworkCore;
 using Telegram.Bot;
 using Telegram.Bot.Types.ReplyMarkups;
 
@@ -19,11 +20,11 @@ namespace Bot.Commands
             {
                 var t = transaction as CommandTransaction;
 
-                var user = db.Users.FirstOrDefault(x => x.Id == t.RecepientId);
+                var user = await db.Users.FirstOrDefaultAsync(u => u.Id == t.RecepientId);
 
-                if (user == null)
+                if (user != null)
                 {
-                    await botClient.SendTextMessageAsync(t?.RecepientId, $"Привет, {user.RealName}.");
+                    await botClient.SendTextMessageAsync(t?.RecepientId, string.Format(BotDictionary.StartCommandForRegisteredUser, user.RealName));
                 }
                 else
                 {
@@ -34,7 +35,10 @@ namespace Bot.Commands
 
                     var keyboard = new InlineKeyboardMarkup(buttons.ToArray());
 
-                    await botClient.SendTextMessageAsync((transaction as CommandTransaction)?.RecepientId, "Привет. Для начала тебе нужно зарегистрироваться. Нажми на кнопку ниже.", replyMarkup: keyboard);
+                    var msg = await botClient.SendTextMessageAsync((transaction as CommandTransaction)?.RecepientId, BotDictionary.StartCommandForUnregisteredUser, replyMarkup: keyboard);
+
+                    t.MessageIds.Add(msg.MessageId);
+                    t.IsComplete = true;
                 }
             }
         }
