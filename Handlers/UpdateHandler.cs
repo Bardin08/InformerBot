@@ -28,6 +28,7 @@ namespace Bot.Handlers
             _transactions = new List<object>();
 
             RegistrationCommand.TransactionInitiated += RegistrationInitialized;
+            CreatePostCommand.TransactionInitiated += PostCreatingInitiated;
         }
 
         public async Task HandleUpdateAsync(Update update)
@@ -77,6 +78,10 @@ namespace Bot.Handlers
                 {
                     (userTransaction as RegistrationTransaction)?.RegistationState.Update(message, userTransaction as RegistrationTransaction, _dbContext, _botClient);
                 }
+                else if ((userTransaction as TransactionBase)?.TransactionType == "postcreating")
+                {
+                    (userTransaction as PostCreationTransaction)?.PostCreatingState.Update(message, userTransaction as PostCreationTransaction, _dbContext, _botClient);
+                }
             }
         }
 
@@ -85,6 +90,13 @@ namespace Bot.Handlers
             _transactions.Add(transaction);
 
             transaction?.RegistationState.Update(new Message(), transaction, _dbContext, _botClient);
+        }
+
+        private void PostCreatingInitiated(PostCreationTransaction transaction)
+        {
+            _transactions.Add(transaction);
+
+            transaction?.PostCreatingState.Update(new Message(), transaction, _dbContext, _botClient);
         }
 
         private async Task RemoveCompleteTransactionsForUser(int userId)
