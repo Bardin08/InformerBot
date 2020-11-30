@@ -15,6 +15,8 @@ namespace Bot.Models
 
         public string Username { get; set; }
 
+        public string Group { get; set; }
+
         public string LanguageCode { get; set; }
     }
 }
