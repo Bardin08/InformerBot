@@ -24,7 +24,15 @@ namespace Bot.Commands
 
                 if (user != null)
                 {
-                    await botClient.SendTextMessageAsync(t?.RecepientId, string.Format(BotDictionary.StartCommandForRegisteredUser, user.RealName));
+                    var buttons = new List<List<InlineKeyboardButton>>
+                    {
+                        new List<InlineKeyboardButton> {InlineKeyboardButton.WithCallbackData("Создать пост", "/createpost") },
+                        new List<InlineKeyboardButton> {InlineKeyboardButton.WithCallbackData("Зарегистрированные группы", "/groups") },
+                    };
+
+                    var keyboard = new InlineKeyboardMarkup(buttons.ToArray());
+
+                    await botClient.SendTextMessageAsync(t?.RecepientId, string.Format(BotDictionary.StartCommandForRegisteredUser, user.RealName), replyMarkup: keyboard);
                 }
                 else
                 {
