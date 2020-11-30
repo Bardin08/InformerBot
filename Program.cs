@@ -23,7 +23,7 @@ namespace Bot
                     services.AddDbContext<ApplicationDbContext>(options =>
                     {
                         options.LogTo(Console.WriteLine);
-                        options.UseSqlite("Data Source=C:\\Users\\User\\Desktop\\IT01.Telegram.Bots\\IT01PollerDb.db");
+                        options.UseSqlite(config["DB:LocalDB"]);
                     });
 
                     services.AddSingleton<ITelegramBotClient>(new TelegramBotClient(config["Bot:Token"]));
