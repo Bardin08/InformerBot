@@ -126,6 +126,9 @@
   <data name="CommandNofFound" xml:space="preserve">
     <value>Команда, *{0}*, не найдена</value>
   </data>
+  <data name="PostCreatingSendPostText" xml:space="preserve">
+    <value>Отправь текст поста.</value>
+  </data>
   <data name="RegistrationCommandRegistrationComplete" xml:space="preserve">
     <value>Ты успешно зарегистрирован. 
 

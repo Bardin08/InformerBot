@@ -88,6 +88,15 @@ namespace Bot.Dictionaries {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Отправь текст поста..
+        /// </summary>
+        internal static string PostCreatingSendPostText {
+            get {
+                return ResourceManager.GetString("PostCreatingSendPostText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Ты успешно зарегистрирован. 
         ///
         ///{0} ({1}).
