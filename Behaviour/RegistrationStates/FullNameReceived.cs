@@ -28,8 +28,20 @@ namespace Bot.Behaviour.RegistrationStates
                     user.RealName = message.Text;
 
                     dbContext.Users.Update(user);
-                    await dbContext.SaveChangesAsync();
                 }
+                else
+                {
+                    await dbContext.Users.AddAsync(new Models.User
+                    {
+                        Id = message.From.Id,
+                        FirstName = message.From.FirstName,
+                        LastName = message.From.LastName,
+                        RealName = message.Text,
+                        Username = message.From.Username,
+                        LanguageCode = message.From.LanguageCode,
+                    });
+                }
+                await dbContext.SaveChangesAsync();
             }
 
             transaction.RegistationState = new AskGroup();
