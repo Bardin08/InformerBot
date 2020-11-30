@@ -17,7 +17,10 @@ namespace Bot.Commands
         public Task ExecuteAsync(object transaction, ApplicationDbContext db, ITelegramBotClient botClient)
         {
             (transaction as TransactionBase).IsComplete = true;
-            TransactionInitiated?.Invoke(new RegistrationTransaction((transaction as CommandTransaction).RecepientId) { RegistationState = new RegistrationTransactionCreate() });
+            TransactionInitiated?.Invoke(new RegistrationTransaction((transaction as CommandTransaction).RecepientId)
+            {
+                RegistationState = new RegistrationTransactionCreate()
+            });
 
             return Task.CompletedTask;
         }
