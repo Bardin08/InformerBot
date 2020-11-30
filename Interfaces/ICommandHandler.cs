@@ -1,7 +1,9 @@
-﻿namespace Bot.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace Bot.Interfaces
 {
     public interface ICommandHandler
     {
-        void HandleCommandAsync(object transaction);
+        Task HandleCommandAsync(object transaction);
     }
 }
